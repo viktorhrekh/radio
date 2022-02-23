@@ -3,8 +3,8 @@
 Radio is a Minecraft Servers plugin for providing the best experience of interaction with broadcasting.
 
 ![Java CI with gradle](https://github.com/vie10/radio/actions/workflows/gradle.yml/badge.svg?branch=master)
-![Issues](https://img.shields.io/github/issues/radio/vikt)
-![License](https://img.shields.io/github/license/radio/vikt)
+![Issues](https://img.shields.io/github/issues/vie10/radio)
+![License](https://img.shields.io/github/license/vie10/radio)
 
 ## Installation
 
