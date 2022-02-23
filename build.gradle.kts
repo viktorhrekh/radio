@@ -67,7 +67,7 @@ tasks.create<Copy>("spigotJars") {
     destinationDir = buildDir.libsDir.spigotDir
     val projects = subprojects.filter { it.name.startsWith("spigot") }
 
-    projects.forEach { dependsOn(it.name, "shadowJar") }
+    projects.forEach { dependsOn("${it.name}:shadowJar") }
     val projectLibs = projects.map { it.buildDir.libsDir }
     from(projectLibs)
 }
