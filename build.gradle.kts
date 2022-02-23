@@ -22,7 +22,7 @@ plugins {
 }
 
 group = "site.vie10"
-version = "1.0-SNAPSHOT"
+version = "1.0-beta"
 
 repositories {
     mavenCentral()
