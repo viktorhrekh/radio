@@ -1,0 +1,99 @@
+import de.undercouch.gradle.tasks.download.Download
+
+///////////////////////////////////////////////////////////////////////////
+// Versions
+///////////////////////////////////////////////////////////////////////////
+
+val spigot = "1.12.2-R0.1-SNAPSHOT"
+
+///////////////////////////////////////////////////////////////////////////
+// Settings
+///////////////////////////////////////////////////////////////////////////
+
+plugins {
+    kotlin("jvm")
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+}
+
+group = "site.vie10"
+version = rootProject.version
+
+repositories {
+    mavenCentral()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://oss.sonatype.org/content/groups/public/")
+}
+
+dependencies {
+    compileOnly("org.spigotmc", "spigot-api", spigot)
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Tasks
+///////////////////////////////////////////////////////////////////////////
+
+tasks.create<Exec>("run") {
+    dependsOn("prepareServer")
+    dependsOn("copyJarToServerPlugins")
+    group = "build"
+    workingDir = projectDir.serverDir
+    commandLine("java", "-jar", workingDir.serverJar.name)
+}
+
+tasks.create<Copy>("copyJarToServerPlugins") {
+    dependsOn("shadowJar")
+    destinationDir = projectDir.serverDir.pluginsDir
+
+    from(buildDir.libsDir)
+}
+
+tasks.create("prepareServer") {
+    dependsOn("downloadServerJar")
+    dependsOn("copyServerDefaults")
+}
+
+tasks.create<Download>("downloadServerJar") {
+    overwrite(false)
+
+    src("https://cdn.getbukkit.org/spigot/spigot-1.12.2.jar")
+    dest(projectDir.serverDir.serverJar)
+}
+
+tasks.create<Copy>("copyServerDefaults") {
+    destinationDir = projectDir.serverDir
+
+    from(rootProject.projectDir.serverDefaultsDir)
+}
+
+tasks.shadowJar {
+    archiveFileName.set("${project.name}-${rootProject.name}-${rootProject.version}.jar")
+}
+
+tasks.processResources {
+    val properties = linkedMapOf(
+        "version" to version.toString()
+    )
+
+    filesMatching("plugin.yml") {
+        expand(properties)
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Helpers for beautify previous code
+///////////////////////////////////////////////////////////////////////////
+
+val File.serverJar: File
+    get() = resolve("server.jar")
+
+val File.libsDir: File
+    get() = resolve("libs")
+
+val File.pluginsDir: File
+    get() = resolve("plugins")
+
+val File.serverDefaultsDir: File
+    get() = resolve("server-defaults")
+
+val File.serverDir: File
+    get() = resolve(".server")

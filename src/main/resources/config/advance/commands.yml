@@ -1,0 +1,37 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# User placeholders.
+# Use existent by enter {{name}} or declare a new yourself.
+# Don't use placeholders in placeholders because of that will not work.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+permission-prefix: "radio.execute"
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+broadcast:
+  # /radio <name>.
+  name: "broadcast"
+  # The permission required for execute the command.
+  permission: "{{permission-prefix}}.broadcast"
+
+suggest:
+  name: "suggest"
+  permission: "{{permission-prefix}}.suggest"
+
+suggestions:
+  name: "suggestions"
+  permission: "{{permission-prefix}}.suggestions"
+
+approve:
+  name: "approve"
+  permission: "{{permission-prefix}}.approve"
+
+decline:
+  name: "decline"
+  permission: "{{permission-prefix}}.decline"
+
+styles:
+  name: "styles"
+  permission: "{{permission-prefix}}.styles"
+
+reload:
+  name: "reload"
+  permission: "{{permission-prefix}}.reload"

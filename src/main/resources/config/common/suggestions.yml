@@ -1,0 +1,4 @@
+# The maximum count of suggestions per player.
+max-per-player: 1
+# Format for created date and time.
+date-time-format: "dd-MM hh:mm:ss"

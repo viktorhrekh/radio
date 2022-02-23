@@ -1,0 +1,58 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# User placeholders.
+# Use existent by enter {{name}} or declare a new yourself.
+# Don't use placeholders in placeholders because of that will not work.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+green: "§a"
+dark-green: "§2"
+gray: "§7"
+dark-red: "§4"
+white: "§f"
+yellow: "§e"
+permission-prefix: "radio.styles"
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Styles for radio.
+styles:
+  # An example how to declare style.
+  info:
+    # Permission that broadcaster should to have for use the style.
+    permission: "{{permission-prefix}}.info"
+    # Sets date format for {date} placeholder.
+    date-format: "yyyy-MM-dd"
+    # Sets time format for {time} placeholder.
+    time-format: "hh:mm:ss"
+    # Use {lines} placeholder for mark the line from which lines will start.
+    # Use {date} placeholder for provide current date in your format.
+    # Use {time} placeholder for provide current time in your format.
+    format:
+      - "{{green}}┌──────────────────────────────────"
+      - "{{green}}│ {{gray}}Open-source radio, {date} {time}."
+      - "{{green}}│ {{dark-green}}Information wave"
+      - "{{green}}├──────────────────────────────────"
+      - "{lines}"
+      - "{{green}}└──────────────────────────────────"
+    # Format for every line.
+    line-format: "{{green}}│ {{white}}{content}"
+    # Settings about wrap lines.
+    line-wraps:
+      # True or false.
+      enabled: true
+      # The length over that requires line wrap.
+      length: 50
+
+  warn:
+    permission: "{{permission-prefix}}.warn"
+    date-format: "yyyy-MM-dd"
+    time-format: "hh:mm:ss"
+    format:
+      - "{{dark-red}}┌──────────────────────────────────"
+      - "{{dark-red}}│ {{gray}}Open-source radio, {date} {time}."
+      - "{{dark-red}}│ {{yellow}}Warning wave!"
+      - "{{dark-red}}├──────────────────────────────────"
+      - "{lines}"
+      - "{{dark-red}}└──────────────────────────────────"
+    line-format: "{{dark-red}}│ {{white}}{content}"
+    line-wraps:
+      enabled: true
+      length: 50

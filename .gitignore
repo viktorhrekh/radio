@@ -1,0 +1,12 @@
+# Intellij IDEA
+.idea
+
+# Gradle
+.gradle
+build
+
+# Logs
+*.log
+
+# Test servers data
+.server

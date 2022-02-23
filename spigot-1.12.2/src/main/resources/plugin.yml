@@ -1,0 +1,12 @@
+name: Radio
+version: '${version}'
+description: A open-source plugin with useful broadcast abilities.
+author: vie10
+main: site.vie10.radio.RadioSpigotAdapter
+load: STARTUP
+commands:
+  radio:
+    aliases: [rad]
+    description: Manage radio
+    usage: /<command> help
+    permission: radio.execute

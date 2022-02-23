@@ -1,0 +1,101 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Every message related a player has {target} placeholder for the player nickname.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# User placeholders.
+# Use existent by enter {{name}} or declare a new yourself.
+# Don't use placeholders in placeholders because of that will not work.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+white: "§f"
+red: "§c"
+blue: "§9"
+yellow: "§e"
+gold: "§6"
+gray: "§7"
+dark-purple: "§5"
+
+accent: "§f"
+primary: "§7"
+
+server-name: "FM"
+server-block: "§9[§fFM§9]"
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# Common messages.
+common:
+  # {millis} — measured time of config reload in millis.
+  reloaded:
+    - "{{server-block}} {{primary}}Config reloaded in {{accent}}{millis}{{primary}} millis."
+  unableOpenGUI:
+    - "{{server-block}} {{accent}}{target}{{primary}}, unable open GUI outside the game!"
+  # {id} — id of the suggestion that was approved.
+  # {from} — sender the of suggestion.
+  # {content} — content of the suggestion.
+  # {created} — date of creation the suggestion.
+  approved:
+    - "{{server-block}} {{primary}}Suggestion {{accent}}{id} {{primary}}approved."
+  # {id} — id of the suggestion that was approved.
+  # {from} — sender the of suggestion.
+  # {content} — content of the suggestion.
+  # {created} — date of creation the suggestion.
+  declined:
+    - "{{server-block}} {{primary}}Suggestion {{accent}}{id} {{primary}}declined."
+  # {id} — id of the suggestion that not found.
+  suggestion-not-found:
+    - "{{server-block}} {{primary}}Suggestion with id {{accent}}{id} {{primary}}not found."
+  no-suggestions:
+    - "{{server-block}} {{primary}}Good work, {{accent}}{target}{{primary}}! No more suggestions has found."
+  # {id} — id of the suggestion.
+  # {from} — id of the player that suggest it.
+  # {created} — the creation date and time in "dd.MM hh:mm:ss" format.
+  # {content} — the suggestion content.
+  suggestion:
+    - "{{blue}}[{{accent}}{id}{{blue}}] {{accent}}{from} {{gray}}{created} {{primary}}suggest broadcast {{accent}}'{content}'."
+  # {max-count} — max count of suggestions.
+  you-have-reached-max-suggestions:
+    - "{{server-block}} {{accent}}{target}{{primary}}, you already have {{accent}}{max-count} {{primary}}suggestions, please, wait a bit before suggest one more."
+  unexpected-exception:
+    - "{{server-block}} {{primary}}Sorry, but seems unexpected exception has occurred. Please, try again later!"
+  you-do-not-have-perm:
+    - "{{server-block}} {{accent}}{target}, {{primary}}you don't have permission to do that."
+  # {style} — style name.
+  style-not-exists:
+    - "{{server-block}} {{primary}}Style {{accent}}{style} {{primary}}not exists. Use {{accent}}/radio styles {{primary}}to see existing styles."
+  broadcast-sent:
+    - "{{server-block}} {{primary}}The broadcast sent to {{accent}}{{server-name}} Radio{{blue}."
+  suggestion-sent:
+    - "{{server-block}} {{primary}}Your suggestion sent to {{accent}}{{server-name}} Radio {{primary}}and will be processed in near time."
+
+# Messages related to command (like help for command etc.).
+commands:
+  help:
+    - "{{primary}}/radio suggest <your radio message> {{accent}}— suggest a message to broadcast."
+    - "{{primary}}/radio broadcast <style> <your radio message> {{accent}}— broadcast a message."
+    - "{{primary}}/radio styles {{accent}}— show broadcast styles."
+    - "{{primary}}/radio suggestions {{accent}}— show suggestions."
+    - "{{primary}}/radio approve <suggestion id> <style> {{accent}}— approve suggestion."
+    - "{{primary}}/radio decline <suggestion id> {{accent}}— decline suggestion."
+    - "{{primary}}/radio reload {{accent}}— reload plugin config."
+  # Help for /radio suggest.
+  suggest-help:
+    - "{{server-block}} {{primary}}/radio suggest <your radio message>."
+  broadcast-help:
+    - "{{server-block}} {{primary}}/radio broadcast <style> <your radio message>."
+  styles-help:
+    - "{{server-block}} {{primary}}/radio styles."
+  suggestions-help:
+    - "{{server-block}} {{primary}}/radio suggestions."
+  approve-help:
+    - "{{server-block}} {{primary}}/radio approve <suggestion id> <style>."
+  decline-help:
+    - "{{server-block}} {{primary}}/radio decline <suggestion id>."
+  reload-help:
+    - "{{server-block}} {{primary}}/radio reload."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Original by vie10.
+# If you're a translator just put your nickname here in "Translated to *language* by *your
+# nickname*" format.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
