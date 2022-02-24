@@ -28,8 +28,6 @@ common:
   # {millis} — measured time of config reload in millis.
   reloaded:
     - "{{server-block}} {{primary}}Config reloaded in {{accent}}{millis}{{primary}} millis."
-  unableOpenGUI:
-    - "{{server-block}} {{accent}}{target}{{primary}}, unable open GUI outside the game!"
   # {id} — id of the suggestion that was approved.
   # {from} — sender the of suggestion.
   # {content} — content of the suggestion.
