@@ -24,21 +24,21 @@ class DeclineCommand : BaseCommand(
 
     override fun onExecute(player: Player, args: List<String>) {
         val id: String = args.id
-        val suggestion = storage.remSuggestion(id).getOrElse {
+        runCatching {
+            val suggestion = storage.remSuggestion(id).getOrThrow()
+            player.applyPlaceholdersAndSendMessage(
+                commonMessages.declined,
+                "id" to id,
+                "from" to suggestion.from,
+                "created" to suggestion.formattedCreated,
+                "content" to suggestion.content
+            )
+        }.onFailure {
             if (it is NotFoundException) {
                 player.applyPlaceholdersAndSendMessage(commonMessages.suggestionNotFound, "id" to id)
-                return
             }
             throw it
         }
-
-        player.applyPlaceholdersAndSendMessage(
-            commonMessages.declined,
-            "id" to id,
-            "from" to suggestion.from,
-            "created" to suggestion.formattedCreated,
-            "content" to suggestion.content
-        )
     }
 
     override fun onTabComplete(player: Player, args: List<String>): List<String> {

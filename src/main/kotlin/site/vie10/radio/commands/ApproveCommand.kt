@@ -36,22 +36,23 @@ class ApproveCommand : BaseCommand(
         }
 
         val id: String = args.id
-        val suggestion = storage.remSuggestion(id).getOrElse {
+        runCatching {
+            val suggestion = storage.remSuggestion(id).getOrThrow()
+            radio.broadcast(style, suggestion.content)
+            player.applyPlaceholdersAndSendMessage(
+                commonMessages.approved,
+                "id" to id,
+                "from" to suggestion.from,
+                "created" to suggestion.formattedCreated,
+                "content" to suggestion.content
+            )
+        }.onFailure {
             if (it is NotFoundException) {
                 player.applyPlaceholdersAndSendMessage(commonMessages.suggestionNotFound, "id" to id)
                 return
             }
             throw it
         }
-
-        radio.broadcast(style, suggestion.content)
-        player.applyPlaceholdersAndSendMessage(
-            commonMessages.approved,
-            "id" to id,
-            "from" to suggestion.from,
-            "created" to suggestion.formattedCreated,
-            "content" to suggestion.content
-        )
     }
 
     override fun onTabComplete(player: Player, args: List<String>): List<String> {
