@@ -4,6 +4,7 @@ import de.undercouch.gradle.tasks.download.Download
 // Versions
 ///////////////////////////////////////////////////////////////////////////
 
+val bstats = "3.0.0"
 val spigot = "1.12.2-R0.1-SNAPSHOT"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -25,6 +26,10 @@ repositories {
 }
 
 dependencies {
+    // Metrics
+    implementation("org.bstats", "bstats-bukkit", bstats)
+
+    // Spigot
     compileOnly("org.spigotmc", "spigot-api", spigot)
 }
 
@@ -66,6 +71,7 @@ tasks.create<Copy>("copyServerDefaults") {
 }
 
 tasks.shadowJar {
+    relocate("org.bstats", "site.vie10")
     archiveFileName.set("${project.name}-${rootProject.name}-${rootProject.version}.jar")
 }
 

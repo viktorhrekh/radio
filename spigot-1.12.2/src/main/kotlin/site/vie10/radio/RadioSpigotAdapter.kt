@@ -2,8 +2,10 @@ package site.vie10.radio
 
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
+import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.fileProperties
@@ -24,6 +26,7 @@ class RadioSpigotAdapter : JavaPlugin(), KoinComponent {
         }
     }
 
+    private val metrics: Metrics = get()
     private val plugin: RadioPlugin by inject()
     private val radioCommandExecutor: RadioCommandExecutor by inject()
 

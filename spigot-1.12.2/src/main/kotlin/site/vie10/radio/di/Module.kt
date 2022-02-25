@@ -3,7 +3,9 @@ package site.vie10.radio.di
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.newFixedThreadPoolContext
+import org.bstats.bukkit.Metrics
 import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
 import org.koin.dsl.bind
@@ -36,9 +38,12 @@ object Module {
         get() = getProperty("jar_config_directory", "config")
     private val Scope.userConfigDirectory: String
         get() = getProperty("user_config_directory", "plugins/radio")
+    private val Scope.bstatsPluginId: Int
+        get() = getProperty("bstats_plugin_id", 14467)
 
     val release: KoinModule
         get() = module {
+            single { Metrics(get<Plugin>() as JavaPlugin, bstatsPluginId) }
             single { InMemoryStorage() } bind Storage::class
             single { ServerRadio() } bind Radio::class
             single { LoggerAdapter(get<Plugin>().logger) } bind Logger::class
