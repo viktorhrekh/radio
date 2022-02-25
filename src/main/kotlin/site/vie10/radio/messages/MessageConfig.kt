@@ -13,7 +13,6 @@ data class MessageConfig(
 ) {
 
     data class CommonMessages(
-        val unableOpenGUI: List<String>,
         val approved: List<String>,
         val declined: List<String>,
         val suggestionNotFound: List<String>,
