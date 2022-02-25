@@ -16,6 +16,19 @@ import site.vie10.radio.server.Server
 import site.vie10.radio.styles.StyleConfig
 import site.vie10.radio.suggestions.SuggestionConfig
 
+private const val BANNER = """
+          .___.
+         /     \        |
+        | O _ O |       | Radio
+        /  \_/  \       | - - - - - - - - - - - - - - - - - -
+      .' /     \ `.     | Official GitHub repo: https://github.com/vie10/radio
+     / _|       |_ \    | Official SpigotMC resource: https://www.spigotmc.org/resources/radio.100251/
+    (_/ |       | \_)   | - - - - - - - - - - - - - - - - - -
+        \       /       | by vie10
+       __\_>-<_/__      |
+       ~;/     \;~
+"""
+
 /**
  * @author vie10
  **/
@@ -55,6 +68,7 @@ class RadioPluginImpl : RadioPlugin {
             }
         }
     ) {
+        showBanner()
         reloadConfig()
         registerCommands()
     }
@@ -72,6 +86,7 @@ class RadioPluginImpl : RadioPlugin {
             }
         }
     ) {
+        showBanner()
         unregisterCommands()
         RuntimeConfig.clean()
     }
@@ -123,5 +138,9 @@ class RadioPluginImpl : RadioPlugin {
                 }.start()
             }
         }
+    }
+
+    private fun showBanner() {
+        log.info { BANNER }
     }
 }
