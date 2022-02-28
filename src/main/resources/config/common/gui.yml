@@ -1,0 +1,139 @@
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# User placeholders.
+# Use existent by enter {{name}} or declare a new yourself.
+# Don't use placeholders in placeholders because of that will not work.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+accent: "§f"
+primary: "§7"
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+templates:
+  # A template example.
+  manage:
+    # The template title.
+    title: "Choose an action"
+    # The template cells count.
+    size: 9
+    # Content of the cells.
+    items:
+      # Indexes where the item will be.
+      "3":
+        # Minecraft material id, you can find its there: https://minecraft-ids.grahamedgecombe.com (required).
+        id: "stained_glass_pane"
+        # Custom name for the item (if needed).
+        name: "{{primary}}Decline"
+        # It's a glass, so can have the color (if needed).
+        color: "red"
+      "5":
+        id: "stained_glass_pane"
+        name: "{{primary}}Send to info wave"
+        # Mark as true if the item will be a container for data (if needed).
+        data: true
+        # Custom lore for the item (if needed).
+        lore:
+          - "{{primary}}The content will be sent to info wave on click:"
+          - "{{accent}}{content}"
+        color: "green"
+      "0,1,2,4,6,7,8":
+        id: "stained_glass_pane"
+        name: "{{primary}}Just a cosmetic item"
+    click-handlers:
+      # Indexes where the handler will be listening for clicks.
+      "3":
+        # Performs the command as the player that clicks.
+        - command: "radio decline {id}"
+        - command: "radio gui"
+      "5":
+        - command: "radio approve {id} info"
+        - command: "radio gui"
+  main:
+    title: "Radio GUI"
+    size: 27
+    items:
+      "0,1,2,3,4,5,6,7,8,18,19,20,21,22,23,24,25,26":
+        id: "stained_glass_pane"
+        name: "{{primary}}Just a cosmetic item"
+      "17":
+        id: "arrow"
+        name: "{{primary}}Next page"
+      "9":
+        id: "arrow"
+        name: "{{primary}}Previous page"
+      "10":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "11":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "12":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "13":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "14":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "15":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+      "16":
+        id: "paper"
+        name: "{{primary}}{id}"
+        lore:
+          - "{{primary}}Created {{accent}}{created} {{primary}}by {{accent}}{from}{{primary}}."
+          - ""
+          - "{{primary}}Content:"
+          - "{{accent}}{content}"
+        data: true
+
+    click-handlers:
+      "9":
+        # Moves list to previous page if it's possible.
+        - "PreviousPage"
+      "17":
+        # Moves list to next page if it's possible.
+        - "NextPage"
+      "0,1,2,3,4,5,6,7,8,18,19,20,21,22,23,24,25,26":
+        # Closes the GUI.
+        - "Close"
+      "10,11,12,13,14,15,16":
+        # Opens the GUI with the name if it exists.
+        - gui: "manage"
+

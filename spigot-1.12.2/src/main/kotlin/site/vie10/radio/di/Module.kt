@@ -17,6 +17,8 @@ import site.vie10.radio.ServerRadio
 import site.vie10.radio.commands.RadioCommandExecutor
 import site.vie10.radio.config.*
 import site.vie10.radio.config.hoplite.HopliteConfigLoader
+import site.vie10.radio.gui.GUIFactory
+import site.vie10.radio.gui.GUIFactoryImpl
 import site.vie10.radio.logger.LoggerAdapter
 import site.vie10.radio.logging.Logger
 import site.vie10.radio.server.Server
@@ -43,6 +45,7 @@ object Module {
 
     val release: KoinModule
         get() = module {
+            single { GUIFactoryImpl() } bind GUIFactory::class
             single { Metrics(get<Plugin>() as JavaPlugin, bstatsPluginId) }
             single { InMemoryStorage() } bind Storage::class
             single { ServerRadio() } bind Radio::class

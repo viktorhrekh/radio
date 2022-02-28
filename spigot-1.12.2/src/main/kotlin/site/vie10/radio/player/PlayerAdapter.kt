@@ -2,6 +2,7 @@ package site.vie10.radio.player
 
 import org.bukkit.command.CommandSender
 import org.bukkit.event.Listener
+import org.bukkit.entity.Player as SpigotPlayer
 
 /**
  * @author vie10
@@ -9,6 +10,14 @@ import org.bukkit.event.Listener
 class PlayerAdapter(
     private val commandSender: CommandSender
 ) : BasePlayer(commandSender.name, commandSender.name), Listener {
+
+    val spigotPlayer: Result<SpigotPlayer> by lazy {
+        runCatching { commandSender as SpigotPlayer }
+    }
+
+    override fun performCommand(command: String) {
+        spigotPlayer.onSuccess { it.performCommand(command) }
+    }
 
     override fun sendMessage(text: String) {
         commandSender.sendMessage(text)
