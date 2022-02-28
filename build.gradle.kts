@@ -17,7 +17,7 @@ val kotest = "5.1.0"
 ///////////////////////////////////////////////////////////////////////////
 
 plugins {
-    kotlin("jvm") version "1.6.20-M1"
+    kotlin("jvm") version "1.6.20-RC"
     kotlin("plugin.serialization") version "1.6.20-RC"
 }
 
