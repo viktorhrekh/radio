@@ -9,8 +9,9 @@ import site.vie10.radio.config.ConfigLoader
 import site.vie10.radio.config.ConfigWriter
 import site.vie10.radio.config.RuntimeConfig
 import site.vie10.radio.config.RuntimeConfig.uploadToRuntime
+import site.vie10.radio.gui.GUIConfig
 import site.vie10.radio.logging.Logger
-import site.vie10.radio.logging.wrappedRunNoResult
+import site.vie10.radio.logging.suspendWrappedRun
 import site.vie10.radio.messages.MessageConfig
 import site.vie10.radio.server.Server
 import site.vie10.radio.styles.StyleConfig
@@ -37,7 +38,7 @@ class RadioPluginImpl : RadioPlugin {
     override val scope: CoroutineScope by inject(named(RadioPlugin.COROUTINE_SCOPE_NAME))
 
     private val configInfo: Set<ConfigInfo> by lazy {
-        setOf(MessageConfig.Info, CommandConfig.Info, SuggestionConfig.Info, StyleConfig.Info)
+        setOf(MessageConfig.Info, CommandConfig.Info, SuggestionConfig.Info, StyleConfig.Info, GUIConfig.Info)
     }
     private val commands: Set<Command> by lazy {
         setOf(
@@ -47,7 +48,8 @@ class RadioPluginImpl : RadioPlugin {
             StylesCommand(),
             SuggestCommand(),
             SuggestionsCommand(),
-            ReloadCommand()
+            ReloadCommand(),
+            GUICommand()
         )
     }
     private val log: Logger by inject()
@@ -55,7 +57,7 @@ class RadioPluginImpl : RadioPlugin {
     private val configWriter: ConfigWriter by inject()
     private val server: Server by inject()
 
-    override suspend fun start() = wrappedRunNoResult(
+    override suspend fun start() = suspendWrappedRun(
         logging = {
             onStart = {
                 log.info { "Starting plugin.." }
@@ -73,7 +75,7 @@ class RadioPluginImpl : RadioPlugin {
         registerCommands()
     }
 
-    override suspend fun stop() = wrappedRunNoResult(
+    override suspend fun stop() = suspendWrappedRun(
         logging = {
             onStart = {
                 log.info { "Stopping plugin.." }
@@ -99,7 +101,7 @@ class RadioPluginImpl : RadioPlugin {
         commands.forEach { server.unregisterCommand(it) }
     }
 
-    override suspend fun reloadConfig() = wrappedRunNoResult(
+    override suspend fun reloadConfig() = suspendWrappedRun(
         logging = {
             onStart = {
                 log.info { "Reloading config.." }

@@ -15,4 +15,6 @@ interface Player : KoinComponent {
     fun sendMessage(text: String)
 
     fun hasPermission(permission: String): Boolean
+
+    fun performCommand(command: String)
 }

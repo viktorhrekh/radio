@@ -5,8 +5,7 @@ import kotlin.system.measureTimeMillis
 /**
  * @author vie10
  **/
-
-suspend fun wrappedRunNoResult(logging: (FunctionLogger<Unit>.() -> Unit)? = null, block: suspend () -> Unit) {
+suspend fun suspendWrappedRun(logging: (FunctionLogger<Unit>.() -> Unit)? = null, block: suspend () -> Unit) {
     val functionLogger = FunctionLogger<Unit>().apply { logging?.invoke(this) }
     functionLogger.onStart()
     val result: Result<Unit>

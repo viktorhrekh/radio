@@ -14,7 +14,8 @@ data class CommandConfig(
     val suggestions: CommandInfoConfig,
     val approve: CommandInfoConfig,
     val decline: CommandInfoConfig,
-    val reload: CommandInfoConfig
+    val reload: CommandInfoConfig,
+    val gui: CommandInfoConfig
 ) {
 
     data class CommandInfoConfig(

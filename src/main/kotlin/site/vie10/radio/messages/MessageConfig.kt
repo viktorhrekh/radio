@@ -15,6 +15,7 @@ data class MessageConfig(
     data class CommonMessages(
         val approved: List<String>,
         val declined: List<String>,
+        val impossibleOpenGUI: List<String>,
         val suggestionNotFound: List<String>,
         val noSuggestions: List<String>,
         val unexpectedException: List<String>,
@@ -35,7 +36,8 @@ data class MessageConfig(
         val suggestionsHelp: List<String>,
         val approveHelp: List<String>,
         val declineHelp: List<String>,
-        val reloadHelp: List<String>
+        val reloadHelp: List<String>,
+        val guiHelp: List<String>
     )
 
     companion object {

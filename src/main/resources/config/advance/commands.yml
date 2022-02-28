@@ -35,3 +35,7 @@ styles:
 reload:
   name: "reload"
   permission: "{{permission-prefix}}.reload"
+
+gui:
+  name: "gui"
+  permission: "{{permission-prefix}}.gui"

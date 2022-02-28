@@ -25,6 +25,8 @@ server-block: "§9[§fFM§9]"
 
 # Common messages.
 common:
+  impossibleOpenGUI:
+    - "{{server-block}} {{primary}}Impossible open GUI outside the game."
   # {millis} — measured time of config reload in millis.
   reloaded:
     - "{{server-block}} {{primary}}Config reloaded in {{accent}}{millis}{{primary}} millis."
@@ -76,6 +78,7 @@ commands:
     - "{{primary}}/radio approve <suggestion id> <style> {{accent}}— approve suggestion."
     - "{{primary}}/radio decline <suggestion id> {{accent}}— decline suggestion."
     - "{{primary}}/radio reload {{accent}}— reload plugin config."
+    - "{{primary}}/radio gui {{accent}}— open suggestions menu."
   # Help for /radio suggest.
   suggest-help:
     - "{{server-block}} {{primary}}/radio suggest <your radio message>."
@@ -91,6 +94,8 @@ commands:
     - "{{server-block}} {{primary}}/radio decline <suggestion id>."
   reload-help:
     - "{{server-block}} {{primary}}/radio reload."
+  gui-help:
+    - "{{server-block}} {{primary}}/radio gui."
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Original by vie10.
