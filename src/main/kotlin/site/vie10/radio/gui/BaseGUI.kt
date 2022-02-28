@@ -14,7 +14,7 @@ abstract class BaseGUI : GUI {
 
     protected val viewers: MutableSet<Player> = mutableSetOf()
     private val clickHandlers: MutableMap<Int, MutableSet<ClickHandler>> = hashMapOf()
-    protected val log: Logger by inject()
+    private val log: Logger by inject()
 
     @Synchronized
     final override fun showFor(player: Player) {
