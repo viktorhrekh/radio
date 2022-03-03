@@ -3,6 +3,8 @@ package site.vie10.radio.gui
 import org.bukkit.Bukkit
 import org.bukkit.DyeColor
 import org.bukkit.Material
+import org.bukkit.event.inventory.InventoryEvent
+import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.koin.core.component.KoinComponent
@@ -18,6 +20,11 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
 
     private val log: Logger by inject()
     private val inventory: Inventory by lazy { Bukkit.createInventory(null, size, title) }
+
+    fun isEventRelatedTo(event: InventoryEvent): Boolean = event.inventory == inventory
+
+    fun isEventRelatedTo(event: InventoryMoveItemEvent): Boolean =
+        event.source == inventory || event.destination == inventory
 
     fun renderItem(slotIndexes: Set<Int>, item: Item, viewData: ViewData?) {
         if (viewData == null) {
@@ -54,28 +61,32 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
         if (spigotPlayer.openInventory.topInventory == inventory) spigotPlayer.closeInventory()
     }
 
+    @Suppress("UsePropertyAccessSyntax")
     private fun Item.asBukkit(): Result<ItemStack> = runCatching {
         val material = Material.valueOf(id.uppercase())
         ItemStack(material, count).apply {
             val newMeta = itemMeta
-            newMeta.displayName = name
-            newMeta.lore = lore
+            newMeta?.setDisplayName(name)
+            newMeta?.lore = lore
             itemMeta = newMeta
-            runCatching { DyeColor.valueOf(color.uppercase()) }.onSuccess {
-                durability = it.ordinal.toShort()
+            runCatching {
+                val dyeColor = DyeColor.valueOf(color.uppercase())
+                durability = dyeColor.ordinal.toShort()
             }
         }
     }
 
+    @Suppress("UsePropertyAccessSyntax")
     private fun Item.asBukkitWithViewData(viewData: ViewData): Result<ItemStack> = runCatching {
         val material = Material.valueOf(id.uppercase())
         ItemStack(material, count).apply {
             val newMeta = itemMeta
-            newMeta.displayName = viewData.applyPlaceholders(name)
-            newMeta.lore = viewData.applyPlaceholders(lore)
+            newMeta?.setDisplayName(viewData.applyPlaceholders(name))
+            newMeta?.lore = viewData.applyPlaceholders(lore)
             itemMeta = newMeta
-            runCatching { DyeColor.valueOf(color.uppercase()) }.onSuccess {
-                durability = it.ordinal.toShort()
+            runCatching {
+                val dyeColor = DyeColor.valueOf(color.uppercase())
+                durability = dyeColor.ordinal.toShort()
             }
         }
     }

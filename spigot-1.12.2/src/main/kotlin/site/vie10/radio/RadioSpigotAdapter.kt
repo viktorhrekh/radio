@@ -32,8 +32,8 @@ class RadioSpigotAdapter : JavaPlugin(), KoinComponent {
 
     override fun onEnable() {
         plugin.scope.launch { plugin.start() }
-        getCommand("radio").apply {
-            executor = radioCommandExecutor
+        getCommand("radio")?.apply {
+            setExecutor(radioCommandExecutor)
             tabCompleter = radioCommandExecutor
         }
     }

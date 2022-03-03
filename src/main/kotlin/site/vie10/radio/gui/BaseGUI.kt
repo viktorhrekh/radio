@@ -48,7 +48,10 @@ abstract class BaseGUI : GUI {
         viewers.parallelStream().forEach {
             closeFor(it)
         }
+        onClose()
     }
+
+    abstract fun onClose()
 
     final override fun click(whoClicked: Player, slotIndex: Int) {
         clickHandlers.getOrElse(slotIndex) { return }.forEach {
