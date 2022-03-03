@@ -22,7 +22,7 @@ class RadioCommandExecutor :
     override fun onTabComplete(
         commandSender: CommandSender,
         spigotCommand: SpigotCommand,
-        alias: String?,
+        alias: String,
         args: Array<out String>
     ): MutableList<String> {
         val player = PlayerAdapter(commandSender)
