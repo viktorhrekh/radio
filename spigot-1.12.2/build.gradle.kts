@@ -80,7 +80,9 @@ tasks.processResources {
         "version" to version.toString()
     )
 
-    filesMatching("plugin.yml") {
+    filesMatching(
+        setOf("plugin.yml", "radio.properties")
+    ) {
         expand(properties)
     }
 }

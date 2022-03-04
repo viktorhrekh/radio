@@ -25,6 +25,8 @@ import site.vie10.radio.server.Server
 import site.vie10.radio.server.ServerAdapter
 import site.vie10.radio.storage.InMemoryStorage
 import site.vie10.radio.storage.Storage
+import site.vie10.radio.updater.GitHubUpdater
+import site.vie10.radio.updater.Updater
 import java.io.File
 import org.koin.core.module.Module as KoinModule
 
@@ -42,9 +44,25 @@ object Module {
         get() = getProperty("user_config_directory", "plugins/radio")
     private val Scope.bstatsPluginId: Int
         get() = getProperty("bstats_plugin_id", 14467)
+    private val Scope.version: String
+        get() = getProperty("plugin_version")
+    private val Scope.updatesDirectory: String
+        get() = getProperty("updates_directory", "plugins/radio/update")
+    private val Scope.gitHubRepositoryHolder: String
+        get() = getProperty("git_hub_repository_holder", "vie10")
+    private val Scope.gitHubRepositoryId: String
+        get() = getProperty("git_hub_repository_id", "radio")
 
     val release: KoinModule
         get() = module {
+            single {
+                GitHubUpdater(
+                    version,
+                    gitHubRepositoryHolder,
+                    gitHubRepositoryId,
+                    updatesDirectory
+                )
+            } bind Updater::class
             single { GUIFactoryImpl() } bind GUIFactory::class
             single { Metrics(get<Plugin>() as JavaPlugin, bstatsPluginId) }
             single { InMemoryStorage() } bind Storage::class

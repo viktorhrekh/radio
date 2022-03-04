@@ -5,8 +5,8 @@ import kotlin.system.measureTimeMillis
 /**
  * @author vie10
  **/
-suspend fun suspendWrappedRun(logging: (FunctionLogger<Unit>.() -> Unit)? = null, block: suspend () -> Unit) {
-    val functionLogger = FunctionLogger<Unit>().apply { logging?.invoke(this) }
+suspend fun suspendWrappedRun(logging: (FunctionLogger.() -> Unit)? = null, block: suspend () -> Unit) {
+    val functionLogger = FunctionLogger().apply { logging?.invoke(this) }
     functionLogger.onStart()
     val result: Result<Unit>
     val measuredMillis: Long = measureTimeMillis {
@@ -15,17 +15,17 @@ suspend fun suspendWrappedRun(logging: (FunctionLogger<Unit>.() -> Unit)? = null
         }
     }
     result.onSuccess {
-        functionLogger.onSuccess(measuredMillis, it)
+        functionLogger.onSuccess(measuredMillis)
     }.onFailure {
         functionLogger.onFailure(it)
     }
 }
 
 @Suppress("MemberVisibilityCanBePrivate")
-class FunctionLogger<T> {
+class FunctionLogger {
     var onStart: (() -> Unit)? = null
     var onFailure: ((throwable: Throwable) -> Unit)? = null
-    var onSuccess: ((measuredMillis: Long, result: T) -> Unit)? = null
+    var onSuccess: ((measuredMillis: Long) -> Unit)? = null
 
     fun onStart() {
         onStart?.invoke()
@@ -35,7 +35,7 @@ class FunctionLogger<T> {
         onFailure?.invoke(throwable)
     }
 
-    fun onSuccess(measuredMillis: Long, result: T) {
-        onSuccess?.invoke(measuredMillis, result)
+    fun onSuccess(measuredMillis: Long) {
+        onSuccess?.invoke(measuredMillis)
     }
 }

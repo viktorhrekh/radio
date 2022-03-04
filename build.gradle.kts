@@ -10,6 +10,7 @@ val hoplite = "1.4.16"
 val koin = "3.1.5"
 val kotlinCoroutines = "1.6.0"
 val kotlinLogging = "2.1.21"
+val kotlinxJson = "1.3.2"
 val kotest = "5.1.0"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -22,7 +23,7 @@ plugins {
 }
 
 group = "site.vie10"
-version = "1.1.1-beta"
+version = "1.2.0-beta"
 
 repositories {
     mavenCentral()
@@ -37,6 +38,9 @@ dependencies {
 
     // Dependency injection
     implementation(koin("core"))
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", kotlinxJson)
 
     // Testing
     testImplementation(kotlinCoroutines("test"))

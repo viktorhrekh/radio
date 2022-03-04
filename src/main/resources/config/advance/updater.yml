@@ -1,0 +1,8 @@
+# If false then no checks for update will be processed.
+enabled: true
+
+# Delay between checks for update in millis.
+delay: 36000000
+
+# If true then update will be downloaded to /plugins/radio/update directory.
+download: true

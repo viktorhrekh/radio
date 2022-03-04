@@ -16,6 +16,10 @@ import site.vie10.radio.messages.MessageConfig
 import site.vie10.radio.server.Server
 import site.vie10.radio.styles.StyleConfig
 import site.vie10.radio.suggestions.SuggestionConfig
+import site.vie10.radio.updater.NoUpdateAvailable
+import site.vie10.radio.updater.UpdateInfo
+import site.vie10.radio.updater.Updater
+import site.vie10.radio.updater.UpdaterConfig
 
 private const val BANNER = """
           .___.
@@ -38,7 +42,14 @@ class RadioPluginImpl : RadioPlugin {
     override val scope: CoroutineScope by inject(named(RadioPlugin.COROUTINE_SCOPE_NAME))
 
     private val configInfo: Set<ConfigInfo> by lazy {
-        setOf(MessageConfig.Info, CommandConfig.Info, SuggestionConfig.Info, StyleConfig.Info, GUIConfig.Info)
+        setOf(
+            MessageConfig.Info,
+            CommandConfig.Info,
+            SuggestionConfig.Info,
+            StyleConfig.Info,
+            GUIConfig.Info,
+            UpdaterConfig.Info
+        )
     }
     private val commands: Set<Command> by lazy {
         setOf(
@@ -56,14 +67,16 @@ class RadioPluginImpl : RadioPlugin {
     private val configLoader: ConfigLoader by inject()
     private val configWriter: ConfigWriter by inject()
     private val server: Server by inject()
+    private val updater: Updater by inject()
+    private lateinit var updatingJob: Job
 
     override suspend fun start() = suspendWrappedRun(
         logging = {
             onStart = {
                 log.info { "Starting plugin.." }
             }
-            onSuccess = { measuredMillis, _ ->
-                log.info { "Plugin successfully started in $measuredMillis millis." }
+            onSuccess = {
+                log.info { "Plugin successfully started in $it millis." }
             }
             onFailure = {
                 log.exception(it) { "Starting plugin failed by unexpected exception." }
@@ -73,6 +86,70 @@ class RadioPluginImpl : RadioPlugin {
         showBanner()
         reloadConfig()
         registerCommands()
+        if (updater.enabled) {
+            startUpdatingCoroutine()
+        }
+    }
+
+    private suspend fun startUpdatingCoroutine() {
+        updatingJob = scope.launch {
+            while (isActive) {
+                checkUpdate()
+                delay(updater.delay)
+            }
+        }
+    }
+
+    private suspend fun checkUpdate() = suspendWrappedRun(
+        logging = {
+            onStart = {
+                log.info { "Checking for update.." }
+            }
+            onSuccess = {
+                log.info { "Checking finished in $it millis." }
+            }
+            onFailure = {
+                log.warn(it) { "Unexpected exception has occurred while checking for update." }
+            }
+        }
+    ) {
+        val updateInfo = updater.fetchAvailableUpdate().getOrElse {
+            if (it is NoUpdateAvailable) {
+                log.info { "Wonderful! Plugin is up to date." }
+                return@suspendWrappedRun
+            } else throw it
+        }
+        log.info {
+            """New version is available — ${updateInfo.version}.
+                
+                |Further information is there: https://github.com/vie10/radio
+                |And also there: https://www.spigotmc.org/resources/radio.100251
+                
+            """.trimMargin()
+        }
+        if (updater.download) {
+            updater.isUpdateDownloaded(updateInfo).onSuccess {
+                if (it) {
+                    log.info { "Update is already downloaded." }
+                } else downloadUpdate(updateInfo)
+            }
+        }
+    }
+
+    private suspend fun downloadUpdate(updateInfo: UpdateInfo) = suspendWrappedRun(
+        logging = {
+            onStart = {
+                log.info { "Downloading ${updateInfo.version}.." }
+            }
+            onSuccess = {
+                log.info { "${updateInfo.version} downloaded in $it millis." }
+            }
+            onFailure = {
+                log.warn(it) { "Unexpected exception has occurred while downloading ${updateInfo.version}." }
+            }
+        }
+    ) {
+        updater.downloadUpdate(updateInfo).getOrThrow()
     }
 
     override suspend fun stop() = suspendWrappedRun(
@@ -80,8 +157,8 @@ class RadioPluginImpl : RadioPlugin {
             onStart = {
                 log.info { "Stopping plugin.." }
             }
-            onSuccess = { measuredMillis, _ ->
-                log.info { "Plugin successfully stopped in $measuredMillis millis." }
+            onSuccess = {
+                log.info { "Plugin successfully stopped in $it millis." }
             }
             onFailure = {
                 log.exception(it) { "Stopping plugin failed by unexpected exception." }
@@ -91,6 +168,13 @@ class RadioPluginImpl : RadioPlugin {
         showBanner()
         unregisterCommands()
         RuntimeConfig.clean()
+        stopUpdatingCoroutine()
+    }
+
+    private fun stopUpdatingCoroutine() {
+        if (this::updatingJob.isInitialized && updatingJob.isActive) {
+            updatingJob.cancel("The server is going shutdown.")
+        }
     }
 
     private fun registerCommands() {
@@ -106,8 +190,8 @@ class RadioPluginImpl : RadioPlugin {
             onStart = {
                 log.info { "Reloading config.." }
             }
-            onSuccess = { measuredMillis, _ ->
-                log.info { "Config successfully reloaded in $measuredMillis millis." }
+            onSuccess = {
+                log.info { "Config successfully reloaded in $it millis." }
             }
             onFailure = {
                 log.exception(it) { "Reloading config failed by unexpected exception." }
