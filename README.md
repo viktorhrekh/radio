@@ -22,9 +22,7 @@ folder.
 
 ## Visuals
 
-<figure class="video_container">
-    <iframe src="https://www.youtube.com/watch?v=Uakwiyfa59U" style="border: 0" allowfullscreen="true"></iframe>
-</figure>
+https://www.youtube.com/watch?v=Uakwiyfa59U
 
 ## Gratitude
 
