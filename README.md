@@ -12,6 +12,7 @@ Download required version from **RELEASES** or build it yourself using `allJars`
 folder.
 
 ## Benefits
+
 - Customizable permission system (manage commands and styles that your players can use).
 - Suggestions system (your players can suggest you news for broadcast).
 - Easy customization (every message used in the plugin can be edited in a config).
@@ -21,12 +22,16 @@ folder.
 
 ## Visuals
 
-![](.github/screenshot-1.png)
+<figure class="video_container">
+    <iframe src="https://www.youtube.com/watch?v=Uakwiyfa59U" style="border: 0" allowfullscreen="true"></iframe>
+</figure>
 
 ## Gratitude
+
 - [Koin](https://github.com/InsertKoinIO/koin) — smart Kotlin injection library used in the plugin.
 - [Hoplite](https://github.com/sksamuel/hoplite) — powerful config system used in the plugin.
-- [Mockk](https://github.com/mockk/mockk), [Kotest](https://github.com/kotest/kotest) — powerful tools for testing the plugin code.
+- [Mockk](https://github.com/mockk/mockk), [Kotest](https://github.com/kotest/kotest) — powerful tools for testing the
+  plugin code.
 - Contributors for their contributions that makes the plugin better.
 
 ## Contributing
