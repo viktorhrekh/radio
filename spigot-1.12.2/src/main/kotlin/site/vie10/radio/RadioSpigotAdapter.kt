@@ -30,11 +30,10 @@ class RadioSpigotAdapter : JavaPlugin(), KoinComponent {
     private val plugin: RadioPlugin by inject()
     private val radioCommandExecutor: RadioCommandExecutor by inject()
 
-    @Suppress("UsePropertyAccessSyntax")
     override fun onEnable() {
         plugin.scope.launch { plugin.start() }
         getCommand("radio")?.apply {
-            setExecutor(radioCommandExecutor)
+            executor = radioCommandExecutor
             tabCompleter = radioCommandExecutor
         }
     }

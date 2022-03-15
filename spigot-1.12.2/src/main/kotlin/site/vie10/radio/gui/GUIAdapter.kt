@@ -37,6 +37,8 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
             slotIndexes.forEach { slotIndex ->
                 inventory.setItem(slotIndex, it)
             }
+        }.onFailure {
+            log.warn(it) { "$item has invalid configuration" }
         }
     }
 
@@ -62,32 +64,41 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
     }
 
     @Suppress("UsePropertyAccessSyntax")
-    private fun Item.asBukkit(): Result<ItemStack> = runCatching {
+    private fun Item.asBukkit(): Result<ItemStack> = newItemStack(id, count, name, lore, color)
+
+    @Suppress("UsePropertyAccessSyntax")
+    private fun Item.asBukkitWithViewData(viewData: ViewData): Result<ItemStack> =
+        newItemStack(id, count, viewData.applyPlaceholders(name), viewData.applyPlaceholders(lore), color)
+
+    private fun newItemStack(
+        id: String,
+        count: Int,
+        name: String,
+        lore: List<String>,
+        color: String,
+    ): Result<ItemStack> = runCatching {
         val material = Material.valueOf(id.uppercase())
         ItemStack(material, count).apply {
-            val newMeta = itemMeta
-            newMeta?.setDisplayName(name)
-            newMeta?.lore = lore
-            itemMeta = newMeta
-            runCatching {
-                val dyeColor = DyeColor.valueOf(color.uppercase())
-                durability = dyeColor.ordinal.toShort()
-            }
+            lore(lore)
+            displayName(name)
+            color(color)
         }
     }
 
-    @Suppress("UsePropertyAccessSyntax")
-    private fun Item.asBukkitWithViewData(viewData: ViewData): Result<ItemStack> = runCatching {
-        val material = Material.valueOf(id.uppercase())
-        ItemStack(material, count).apply {
-            val newMeta = itemMeta
-            newMeta?.setDisplayName(viewData.applyPlaceholders(name))
-            newMeta?.lore = viewData.applyPlaceholders(lore)
-            itemMeta = newMeta
-            runCatching {
-                val dyeColor = DyeColor.valueOf(color.uppercase())
-                durability = dyeColor.ordinal.toShort()
-            }
+    private fun ItemStack.color(newColor: String) {
+        if (newColor.isEmpty()) return
+        durability = DyeColor.valueOf(newColor.uppercase()).ordinal.toShort()
+    }
+
+    private fun ItemStack.displayName(newName: String) {
+        itemMeta = itemMeta?.apply {
+            displayName = newName
+        }
+    }
+
+    private fun ItemStack.lore(newLore: List<String>) {
+        itemMeta = itemMeta?.apply {
+            lore = newLore
         }
     }
 }

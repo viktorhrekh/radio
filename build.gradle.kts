@@ -9,7 +9,6 @@ val mockk = "1.12.2"
 val hoplite = "1.4.16"
 val koin = "3.1.5"
 val kotlinCoroutines = "1.6.0"
-val kotlinLogging = "2.1.21"
 val kotlinxJson = "1.3.2"
 val kotest = "5.1.0"
 
