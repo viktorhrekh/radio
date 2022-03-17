@@ -6,17 +6,18 @@ import site.vie10.radio.logging.Logger
 import site.vie10.radio.messages.MessageConfig
 import site.vie10.radio.placeholders.applyPlaceholdersAndSendMessage
 import site.vie10.radio.player.Player
+import site.vie10.radio.utils.newConcurrentHashSet
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author vie10
  **/
 abstract class BaseGUI : GUI {
 
-    protected val viewers: MutableSet<Player> = mutableSetOf()
-    private val clickHandlers: MutableMap<Int, MutableSet<ClickHandler>> = hashMapOf()
+    protected val viewers: MutableSet<Player> = newConcurrentHashSet()
+    private val clickHandlers: MutableMap<Int, MutableSet<ClickHandler>> = ConcurrentHashMap()
     private val log: Logger by inject()
 
-    @Synchronized
     final override fun showFor(player: Player) {
         viewers.add(player)
         runCatching {
@@ -32,7 +33,6 @@ abstract class BaseGUI : GUI {
 
     abstract fun onShowFor(player: Player)
 
-    @Synchronized
     final override fun closeFor(player: Player) {
         viewers.remove(player)
         runCatching {

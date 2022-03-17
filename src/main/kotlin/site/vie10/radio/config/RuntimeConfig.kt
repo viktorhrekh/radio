@@ -1,5 +1,6 @@
 package site.vie10.radio.config
 
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.instanceParameter
@@ -11,7 +12,7 @@ import kotlin.reflect.full.memberProperties
 @Suppress("UNCHECKED_CAST")
 object RuntimeConfig {
 
-    private val valuesMap: HashMap<String, Any?> = hashMapOf()
+    private val valuesMap: MutableMap<String, Any?> = ConcurrentHashMap()
     private val KProperty1<*, *>.fullName
         get() = "${instanceParameter!!.type}.${name}"
 
@@ -28,7 +29,6 @@ object RuntimeConfig {
             valuesMap[fullName] = value
         }
 
-    @Synchronized
     fun KClass<*>.removeFromRuntime() {
         memberProperties.forEach { property ->
             val fullName = property.fullName
@@ -36,7 +36,6 @@ object RuntimeConfig {
         }
     }
 
-    @Synchronized
     fun Any.uploadToRuntime() {
         this::class.memberProperties.forEach { property ->
             val fullName = property.fullName
@@ -44,7 +43,6 @@ object RuntimeConfig {
         }
     }
 
-    @Synchronized
     fun clean() {
         valuesMap.clear()
     }
