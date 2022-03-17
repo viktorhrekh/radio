@@ -33,7 +33,8 @@ class RadioSpigotAdapter : JavaPlugin(), KoinComponent {
     override fun onEnable() {
         plugin.scope.launch { plugin.start() }
         getCommand("radio")?.apply {
-            executor = radioCommandExecutor
+            @Suppress("UsePropertyAccessSyntax")
+            setExecutor(radioCommandExecutor) // Use property access for support 1.14+.
             tabCompleter = radioCommandExecutor
         }
     }

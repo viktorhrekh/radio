@@ -63,10 +63,8 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
         if (spigotPlayer.openInventory.topInventory == inventory) spigotPlayer.closeInventory()
     }
 
-    @Suppress("UsePropertyAccessSyntax")
     private fun Item.asBukkit(): Result<ItemStack> = newItemStack(id, count, name, lore, color)
 
-    @Suppress("UsePropertyAccessSyntax")
     private fun Item.asBukkitWithViewData(viewData: ViewData): Result<ItemStack> =
         newItemStack(id, count, viewData.applyPlaceholders(name), viewData.applyPlaceholders(lore), color)
 
@@ -92,7 +90,8 @@ class GUIAdapter(title: String, size: Int) : KoinComponent {
 
     private fun ItemStack.displayName(newName: String) {
         itemMeta = itemMeta?.apply {
-            displayName = newName
+            @Suppress("UsePropertyAccessSyntax")
+            setDisplayName(newName) // Use property access for support 1.14+.
         }
     }
 
