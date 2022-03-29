@@ -18,7 +18,7 @@ val kotest = "5.1.0"
 
 plugins {
     kotlin("jvm") version "1.6.20-RC2"
-    kotlin("plugin.serialization") version "1.6.20-RC"
+    kotlin("plugin.serialization") version "1.6.20-RC2"
 }
 
 group = "site.vie10"
