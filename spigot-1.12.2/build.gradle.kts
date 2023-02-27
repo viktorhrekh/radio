@@ -13,7 +13,7 @@ val spigot = "1.12.2-R0.1-SNAPSHOT"
 
 plugins {
     kotlin("jvm")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.0"
 }
 
 group = "site.vie10"
